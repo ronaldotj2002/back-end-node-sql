@@ -1,18 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const routers = require('./routes');
 
 const app = express();
+const port = 3000;
 
-app.use(bodyParser.json());
-
-const port = 7000;
-
-app.get('/teste', (req, res) => res
-.status(200)
-.send(
-    {mensagem: 'Acesso à API!'}
-))
+routers(app);
 
 app.listen(port, () => console.log("Servidor Rodando na porta: ", port));
 
-module.exports = app;
+module.exports = app
