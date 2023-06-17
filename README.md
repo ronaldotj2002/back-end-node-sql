@@ -9,6 +9,8 @@
  - path
  - sequelize - [Documentação do Sequelize](https://sequelize.org/docs/v6/other-topics/migrations/)
  - sequelize-cli
+ - bcryptjs
+ - uuid
 
 # Banco de dados
  - mariadb 
