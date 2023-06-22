@@ -1,6 +1,7 @@
 const database = require('../models');
-const { hash } = require('bcryptjs');
-const uuid = require('uuid');
+const UsuarioService = require('../service/usuarioService');
+
+const usuarioService = new UsuarioService();
 
 class UsuarioController {
 
@@ -36,30 +37,16 @@ class UsuarioController {
 
     }
 
-    static async criarUsuario(req, res) {
+    static async cadastrar(req, res) {
+        const {login, email, senha} = req.body;
 
-        const novoUsuario = req.body
-        console.log("==>", novoUsuario);
+        
         try {
-            const login = await database.Usuarios.findOne({ 
-                where: { 
-                    login: novoUsuario.login
-                } 
-            });    
-            
-            if(login) {
-                throw new Error('Este Login já exista na Base de Dados')
-            }            
-
-            // const senhaCript = await hash(req.senha, 8)
-            const usuarioCriado = await database.Usuarios.create(novoUsuario)
-            
-            return res.status(200).json(usuarioCriado);
+            const usuario = await usuarioService.criarUsuario({login, email, senha})
+            res.status(201).send(usuario)
 
         } catch (err) {
-            return res.status(500).json(err.message);
-        } finally {
-
+            res.status(400).json({ message: err.message});
         }
 
     }

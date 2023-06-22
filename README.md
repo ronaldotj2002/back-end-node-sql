@@ -11,6 +11,7 @@
  - sequelize-cli
  - bcryptjs
  - uuid
+ - jsonwebtoken
 
 # Banco de dados
  - mariadb 
