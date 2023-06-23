@@ -1,13 +1,13 @@
 const database = require('../models')
-const hash  = require('bcryptjs');
+const {hash}  = require('bcryptjs');
 const uuid = require('uuid');
 
 class UsuarioService {
     
     async criarUsuario(dados) { 
 
+        console.info("Iniciando a criação do Usuário..", dados)
         const novoUsuario = dados
-        console.log("==>", novoUsuario);
 
         const login = await database.Usuarios.findOne({ 
             where: { 
@@ -34,6 +34,7 @@ class UsuarioService {
             return usuarioCriado
             
         } catch (err) {
+            console.log("ERRO: ", err)
            throw new Error('Erro ao cadastrar usuario')
         } 
 

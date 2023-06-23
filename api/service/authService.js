@@ -7,6 +7,8 @@ class AuthService {
 
     async login(dados) {
         
+        console.info("Iniciando o Login..");
+        
         const usuario = await database.Usuarios.findOne({
             attributes: ['id', 'login', 'senha'],
             where: {
@@ -17,10 +19,9 @@ class AuthService {
         if(!usuario) {
             throw new Error('usuário não cadastrado no sistema!')
         }
-console.log("dados", dados.senha)
-console.log("usuario ==>", usuario.senha)
+
         const verificarSenha = await compare(dados.senha, usuario.senha)
-        console.log("===> verificarSenha", verificarSenha)
+        
 
              if(!verificarSenha) {
             throw new Error('Usuário ou senha inválido!')
@@ -30,16 +31,11 @@ console.log("usuario ==>", usuario.senha)
             id: usuario.dataValues.id,
             login: usuario.dataValues.login
         }, fileSecret.secret, {
-            expiresIn: 86400
+            expiresIn: 86400 // O token expira em 24h
         })
         
         return { accessToken }
             
-       
-
-       
-            // res.status(401).send({ message: err.message })
-    
     }
 
 }
