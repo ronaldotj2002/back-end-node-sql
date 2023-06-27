@@ -6,7 +6,7 @@ const  fileSecret  = require('../config/jsonSecret');
 class AuthService {
 
     async login(dados) {
-        
+        console.log("DADOS LOGIN", dados)
         console.info("Iniciando o Login..");
         
         const usuario = await database.Usuarios.findOne({

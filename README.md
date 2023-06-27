@@ -22,7 +22,7 @@
  - Comandos utilizados no projeto: 
     - npx sequelize-cli init 
         --> Criando um template inicial
-    - npx sequelize-cli model:create --name Pessoas --attributes nome:string,cpf:integer,email:string,tipoPessoa:string 
+    - npx sequelize-cli model:create --name Usuarios --attributes nome:string,login:string,email:string,role:string,senha:string 
         --> Criando um model
     - npx sequelize-cli db:migrate 
         --> Criando a migração, de acordo com o arquivo da pasta migrations

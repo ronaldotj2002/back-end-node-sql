@@ -7,9 +7,8 @@ class UsuarioController {
 
     static async listarUsuarioAll(req, res) {
         try {
-            const listarUsuarios = await database.Usuarios.findAll();
-            return res.status(200).json(listarUsuarios);
-
+            const carregarUsuarios = await UsuarioService.listarUsuarios()
+            return res.status(201).send(carregarUsuarios) 
         } catch (err) {
             return res.status(500).json(err.message);
         } finally {
@@ -22,14 +21,10 @@ class UsuarioController {
 
         const { id } = req.params;
         try {
-            const filtrarUsuario = await database.Usuarios.findOne({ 
-                where: { 
-                    id: Number(id)
-                } 
-            });            
-            return res.status(200).json(filtrarUsuario);
-
-        } catch (err) {
+            const usuario = await UsuarioService.filtrarUsuario(id)
+            return res.status(200).json(usuario);
+            
+          } catch (err) {
             return res.status(500).json(err.message);
         } finally {
 
@@ -38,17 +33,44 @@ class UsuarioController {
     }
 
     static async cadastrar(req, res) {
-        const {login, email, senha} = req.body;
-
+        const {nome, login, email, role, senha} = req.body;
         
         try {
-            const usuario = await usuarioService.criarUsuario({login, email, senha})
+            const usuario = await usuarioService.criarUsuario({nome, login, email, role, senha})
             res.status(201).send(usuario)
 
         } catch (err) {
             res.status(400).json({ message: err.message});
         }
 
+    }
+
+    static async atualizar(req, res) {
+
+        const { id } = req.params;
+        
+        const body = req.body;
+        
+        try {
+            const usuario = await usuarioService.atualizaUsuario(body, id)
+            res.status(200).send(usuario)
+
+        } catch (err) {
+            res.status(400).json({ message: err.message});
+        }
+
+    }
+
+    static async excluir(req, res) {
+
+        const { id } = req.params
+
+        try {
+            const usuario = await usuarioService.deletarUsuario(id)
+            res.status(200).send(usuario)
+        } catch (err) {
+            res.status(400).json({ message: err.message});
+        }
     }
 
 }

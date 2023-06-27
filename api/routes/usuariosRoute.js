@@ -4,13 +4,15 @@ const autenticacao = require('../middleware/auth');
 
 const router = Router();
 
-router.use(autenticacao)
 router
     .post('/usuarios', UsuarioController.cadastrar)
+    
+    router.use(autenticacao) // Obrigatório a autenticação para as funções abaixo
+    
     .get('/usuarios', UsuarioController.listarUsuarioAll)
     .get('/usuarios/id/:id', UsuarioController.listarUmUsuario)
-    .put('/usuarios/id/:id')
-    .delete('/usuarios/id/:id')
+    .put('/usuarios/id/:id', UsuarioController.atualizar)
+    .delete('/usuarios/id/:id', UsuarioController.excluir)
 
 
     module.exports = router
