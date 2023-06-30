@@ -7,7 +7,7 @@ const router = Router();
 router
     .post('/usuarios', UsuarioController.cadastrar)
     
-    router.use(autenticacao) // Obrigatório a autenticação para as funções abaixo
+    router.use(autenticacao) // Obrigatório a autenticação para as rotas abaixo
     
     .get('/usuarios', UsuarioController.listarUsuarioAll)
     .get('/usuarios/id/:id', UsuarioController.listarUmUsuario)

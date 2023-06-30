@@ -6,7 +6,6 @@ const  fileSecret  = require('../config/jsonSecret');
 class AuthService {
 
     async login(dados) {
-        console.log("DADOS LOGIN", dados)
         console.info("Iniciando o Login..");
         
         const usuario = await database.Usuarios.findOne({
@@ -31,7 +30,7 @@ class AuthService {
             id: usuario.dataValues.id,
             login: usuario.dataValues.login
         }, fileSecret.secret, {
-            expiresIn: 86400 // O token expira em 24h
+            expiresIn: 3600 // Tempo de expiração do token
         })
         
         return { accessToken }

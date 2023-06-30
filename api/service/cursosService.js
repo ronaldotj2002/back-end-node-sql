@@ -1,4 +1,5 @@
 const database = require('../models')
+const { Op } = require('sequelize')
 
 class CursosService {
 
@@ -64,6 +65,35 @@ class CursosService {
             return cursoAtualizado
         } catch (err) {
             throw new Error('Erro ao atualizar o curso')
+        }
+    }
+
+    static async excluirCurso(id) {
+
+        try {
+            await database.Cursos.destroy({where: { id: Number(id) }})
+            return "Curso Deletado com sucesso!"
+        } catch (err) {
+            throw new Error('Erro ao deletar Curso')
+        }
+    }
+
+    static async filtrarCursosDisponiveis() {
+
+        const dataAtual = new Date()
+        try {
+            const cursosDisponiveis = await database.Cursos.findAll({ 
+                where: {
+                    data_inicio: {
+                        //cursos em que a data de início sejam maiores que a data atual
+                       [Op.gt] : dataAtual                       
+                    }
+                }
+            });
+            console.log("cursosDisponiveis", cursosDisponiveis)
+            return cursosDisponiveis 
+        } catch (err) {
+            throw new Error('Erro ao filtrar cursos')
         }
     }
 

@@ -7,16 +7,18 @@ module.exports = {
       await queryInterface.bulkInsert('Inscricoes', [
         {
         status: 'Ativo',
+        data_inscricao: new Date(),
         data_cancelamento: new Date(),
-        usuario_id: 5,
-        curso_id: 1
+        usuarioId: 5,
+        cursoId: 1
 
       },
       {
         status: 'Ativo',
+        data_inscricao: new Date(),
         data_cancelamento: new Date(),
-        usuario_id: 6,
-        curso_id: 2
+        usuarioId: 6,
+        cursoId: 2
 
       }
     ], {});

@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Cursos.init({
     nome: DataTypes.STRING,
     descricao: DataTypes.STRING,
-    data_inicio: DataTypes.DATEONLY
+    data_inicio: DataTypes.DATEONLY,
+    inscritos: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Cursos',

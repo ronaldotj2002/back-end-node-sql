@@ -12,18 +12,21 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      data_inscricao: {
+        type: Sequelize.DATEONLY
+      },
       data_cancelamento: {
         type: Sequelize.DATEONLY
       },
-      usuario_id: {
+      usuarioId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Usuarios', key: 'id' }
+        references: { model: 'usuarios', key: 'id' }
       },
-      curso_id: {
+      cursoId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Cursos', key: 'id' }
+        references: { model: 'cursos', key: 'id' }
       },
       createdAt: {
         allowNull: false,

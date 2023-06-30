@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const usuario = require('./usuariosRoute');
 const auth = require('./authRoute');
 const cursos = require('./cursosRoute');
+const inscricoes = require('./inscricoesRoute');
 
 
 module.exports = app => {
@@ -10,7 +11,8 @@ module.exports = app => {
         bodyParser.json(),
         auth,
         usuario,
-        cursos
+        cursos,
+        inscricoes
         )
          
 }

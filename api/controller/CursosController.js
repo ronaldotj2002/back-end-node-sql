@@ -1,13 +1,11 @@
-const database = require('../models');
 const CursosService = require('../service/cursosService');
-const cusosService = require('../service/cursosService');
 
 class CursosController {
 
     static async listar(req, res) {
         console.info("Iniciando a lista de Cursos..")
         try {
-            const cursos = await cusosService.listarCursos();
+            const cursos = await CursosService.listarCursos();
             return res.status(200).json(cursos);
         } catch (err) {
             return res.status(500).json(err.message);
@@ -18,7 +16,7 @@ class CursosController {
         const { id } = req.params;
         console.info("Iniciando o filtro de Cursos..")
         try {
-            const cursos = await cusosService.filtrarCursos(id);
+            const cursos = await CursosService.filtrarCursos(id);
             return res.status(200).json(cursos);
         } catch (err) {
             return res.status(500).json(err.message);
@@ -31,7 +29,7 @@ class CursosController {
 
         const body = req.body;
         try {
-            const cursos = await cusosService.cadastrarCursos(body);
+            const cursos = await CursosService.cadastrarCursos(body);
             return res.status(200).json(cursos);
         } catch (err) {
             return res.status(500).json(err.message);
@@ -45,6 +43,27 @@ class CursosController {
         try {
             const editarCurso = await CursosService.editarCurso(body, id)
             return res.status(200).json(editarCurso);
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    }
+
+    static async deletar(req, res) {
+
+        const { id } = req.params;
+        try {
+            const deletarCurso = await CursosService.excluirCurso(id)
+            return res.status(200).json(deletarCurso);
+        } catch (err) {
+            return res.status(500).json(err.message);
+        }
+    }
+
+    static async cursoDisponiveis(req, res) {
+
+        try {
+            const listaCursos = await CursosService.filtrarCursosDisponiveis()
+            return res.status(200).json(listaCursos)
         } catch (err) {
             return res.status(500).json(err.message);
         }
