@@ -63,8 +63,11 @@
  A Collections está na pasta COLLECTIONS. 
 # Iniciar o projeto
 
+    - Criar uma banco de dados com o nome 'curso'
+    - Rodar a migração para gerar as tabelas no banco: npx sequelize-cli db:migrate 
+    - Usar a collection que está na pasta COLLECTIONS
+    
+
     - NODE - Versão: v18.16.0
 
     
-
- - npm start
