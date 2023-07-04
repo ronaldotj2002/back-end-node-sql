@@ -14,7 +14,7 @@ class InscricaoController {
     }
 
     static async filtrar(req, res) {
-        console.info("Iniciando o Filtro de Inscrições..")
+        console.info("Iniciando o Filtro de Inscrições..", req.params)
         const { id } = req.params;
         try {
             const inscricao = await InscricaoService.filtrarInscricoes(id)
@@ -29,8 +29,7 @@ class InscricaoController {
         
         const usuarioId = req.params.id
         const dadosInscricao = req.body
-        // console.log("====> realizarInscricao", usuarioId)
-        // const body = req.body
+        
         try {
             const inscricao = await InscricaoService.realizarInscricao(dadosInscricao, usuarioId)
             console.log("Inscricao",inscricao)
@@ -44,8 +43,8 @@ class InscricaoController {
 
     static async deletarInscricao(req, res) {
         const { id } = req.params;
-        try {
-        
+        console.log("Deleting Inscricao... ", id)
+        try {        
             const inscricao = await InscricaoService.cancelarInscricao(id)
             return res.status(200).json(inscricao)
         } catch (err) {

@@ -17,58 +17,52 @@ class InscricaoService {
 
     static async filtrarInscricoes(id) {
 
-        const verificarInscricao = await database.Inscricoes.findOne({
-            where: {
-                id: Number(id)
-            }
-        })
-        // se o id informado não existir na base
-        if(!verificarInscricao) 
-            throw new Error('Não existe cadastro para a inscrição pesquisada')
-
         try {
-            const inscricao = await database.Inscricoes.findOne({ 
+         
+            const verificarInscricao = await database.Inscricoes.findAll({
                 where: {
-                    id: Number(id)
+                    usuarioId: Number(id)
                 }
-            });
-            return inscricao 
+            })
+            return verificarInscricao 
         } catch (err) {
-            throw new Error('Erro ao filtrar inscricao')
+            throw new Error('Erro ao carregar inscrição!')
         }
+
     }
 
     static async realizarInscricao(dados, id) {
-        
+        console.log("id", id)
+        console.log("DADOS", dados)
         // Busca Inscritos
-        const inscrito = await database.Inscricoes.findOne({ 
+
+        const inscrito = await database.Inscricoes.findAll({
             where: {
-                usuarioId: Number(id)
+                usuarioId: Number(id),
+                cursoId: Number(dados.cursoId)
             }
+        });
+
+        // console.log("inscrito?.dataValues.usuarioId",inscrito?.dataValues.usuarioId)
+        // console.log("id",id)
+
+        inscrito.forEach(insc => {
+            if(insc?.dataValues.usuarioId == id)
+                throw new Error('Aluno já Inscrito no curso') 
         })
-        console.log("=====> DADOS", inscrito)
-        console.log("=======>id", id)
-        console.log("=====> ", dados)
-        
+
+
+                
         // Busca a quantidade de inscritos no curso
         const curso = await database.Cursos.findOne({ 
            where: {
                id: Number(dados.cursoId)
            }
        })
-
-       console.log("=====> DADOS.usuarioId", inscrito.cursoId, '=', dados.cursoId)
-        // Verificando se o usuário já está inscrito no curso        
-        if(!inscrito) 
-            throw new Error('Curso não encontrado') 
-
-        if(inscrito.cursoId == dados.cursoId) 
-            throw new Error('Aluno já Inscrito no curso') 
         
-        
-        // if(curso.data_inicio <= new Date()) 
-        //     throw new Error('Este Curso não está disponível') 
-        
+        if(!curso) 
+           throw new Error('O curso informado não existe') 
+              
         // Caso o usuário não esteja inscrito no curso
         try {
             const inscricao = await database.Inscricoes.create({
@@ -104,10 +98,43 @@ class InscricaoService {
     }
 
     static async cancelarInscricao(id) {
+        console.log('cancelarInscricao service ====>', id)
+        // Busca a quantidade de inscritos no curso
+        const inscricao = await database.Inscricoes.findOne({ 
+            where: {
+                id: Number(id)
+            }
+        })
+
+        const curso = await database.Cursos.findOne({ 
+            where: {
+                id: Number(inscricao.cursoId)
+            }
+        })
+            
 
         try {
-            await database.Inscricoes.destroy({where: { id: Number(id) }})
+            
+          const cancelado =  await database.Inscricoes.destroy({where: { id: Number(id) }})  
+          
+            if(cancelado){
+                console.log('cancelarInscricao cancelado ====>', cancelado)
+                // Decrementando após o cancelamento da inscrição
+                const qtdAtualizada = {inscritos: curso.inscritos - 1};
+                
+                try {
+                    // Atualizando a quantidade de inscritos no curso
+                    await database.Cursos.update(qtdAtualizada, {
+                        where: { id: Number(inscricao.cursoId) }
+                        });
+
+                } catch(err) {
+                    throw new Error('Erro ao atualizar a quantidade de inscritos')
+                }
+                }
+           
             return "Inscrição Cancelada com sucesso!"
+
         } catch (err) {
             throw new Error('Erro ao cancelar Inscrição')
         }

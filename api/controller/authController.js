@@ -5,7 +5,7 @@ const authService = new AuthService()
 class AuthController {
 
     static async login(req, res) {
-
+console.log("auth.controller", req.body)
         const {login, senha} = req.body
         
         try {
@@ -17,7 +17,14 @@ class AuthController {
         }
 
     }
-}
 
+    // static async logout(req, res) {
+
+    //     await authService.logoutUser()
+    //     return { message: 'Usuario deslogado!'}
+
+
+    // }
+}
 
 module.exports = AuthController

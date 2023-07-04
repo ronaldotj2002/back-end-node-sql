@@ -7,7 +7,7 @@ class AuthService {
 
     async login(dados) {
         console.info("Iniciando o Login..");
-        
+        console.log("auth-service", dados)
         const usuario = await database.Usuarios.findOne({
             attributes: ['id', 'login', 'senha'],
             where: {
@@ -33,9 +33,16 @@ class AuthService {
             expiresIn: 3600 // Tempo de expiração do token
         })
         
-        return { accessToken }
+        
+        return { accessToken, login:usuario.dataValues.login, id:usuario.dataValues.id }
             
     }
+
+    // static async logoutUser(req, res) {
+            
+    //     return res.json({ accessToken: null })
+
+    // }
 
 }
 

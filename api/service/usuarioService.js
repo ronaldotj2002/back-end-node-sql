@@ -15,7 +15,7 @@ class UsuarioService {
     }
 
     static async filtrarUsuario(id) {
-        console.info("Listando Usuários..")
+        console.info("Listando um usuário..")
         try {
             const usuario = await database.Usuarios.findOne({ 
                 where: { 
@@ -29,7 +29,7 @@ class UsuarioService {
     }
     
     async criarUsuario(dados) { 
-
+        console.log("dados node", dados)
         console.info("Iniciando a criação do Usuário..")
         const novoUsuario = dados
 

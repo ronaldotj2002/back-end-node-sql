@@ -7,6 +7,8 @@ class CursosService {
 
         try {
             const cursos = await database.Cursos.findAll();
+
+            
             return cursos 
         } catch (err) {
             throw new Error('Erro ao listar cursos')
