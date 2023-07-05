@@ -16,12 +16,12 @@ const corsOptions = {
 module.exports = app => {
 
     app.use(
-        bodyParser.json(),        
         cors(corsOptions),
+        bodyParser.json(),        
+        auth,
         cursos,
         inscricoes,
-        auth,
-        usuario,
+        usuario
         )
          
 }

@@ -1,9 +1,11 @@
 const { Router } = require('express');
-const InscricaoController = require('../controller/InscricaoController')
+const InscricaoController = require('../controller/InscricaoController');
+const autenticacao = require('../middleware/auth');
 
 const router = new Router();
 
 
+router.use(autenticacao)
 router
     .get('/inscricoes', InscricaoController.listar)
     .get('/inscricoes/id/:id', InscricaoController.filtrar)
