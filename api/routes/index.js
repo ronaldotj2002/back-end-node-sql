@@ -19,9 +19,9 @@ module.exports = app => {
         cors(corsOptions),
         bodyParser.json(),        
         auth,
+        usuario,
         cursos,
         inscricoes,
-        usuario
         )
          
 }
